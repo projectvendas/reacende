@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reacende - Tempo de Qualidade para Casais</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary: #ff3366;
+      --secondary: #ff6b8b;
+      --light: #fff5f7;
+      --dark: #5a2a3c;
+      --accent: #ffafcc;
+      --text: #333;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body, html {
+      margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #fff5f7, #ffeef2); color: var(--text); line-height: 1.6; overflow-x: hidden;
+    }
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 1.5rem 1rem; text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1); position: relative; overflow: hidden;
+    }
+    header::before { content: ""; position: absolute; top: -50px; left: -50px; width: 150px; height: 150px; background: rgba(255,255,255,0.1); border-radius: 50%; }
+    header::after { content: ""; position: absolute; bottom: -30px; right: -30px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%; }
+    .container { max-width: 980px; margin: 0 auto; padding: 1.5rem 1rem; }
+    .card {
+      background: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin: 1.5rem 0; padding: 1.5rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease; border: 1px solid rgba(255, 107, 139, 0.2);
+    }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+    h1 { font-size: 2.5rem; margin-bottom: 0.5rem; position: relative; z-index: 2; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+    h2 { margin-top: 0; color: var(--primary); font-size: 1.6rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+    h2 i { font-size: 1.4rem; }
+    .button { display: inline-flex; align-items: center; justify-content: center; padding: 0.8rem 1.5rem; margin: 0.3rem; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border: none; border-radius: 50px; cursor: pointer; transition: all 0.3s ease; font-size: 1rem; font-weight: 600; box-shadow: 0 4px 10px rgba(255, 51, 102, 0.3); }
+    .button:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(255, 51, 102, 0.4); }
+    .button.small { padding: 0.6rem 1.2rem; font-size: 0.9rem; }
+    .button.outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); box-shadow: none; }
+    .button.outline:hover { background: var(--primary); color: white; }
+    .mission, .game, .wish, .atividade, .biblia {
+      background: rgba(255, 235, 239, 0.5); padding: 1rem; border-left: 5px solid var(--primary); border-radius: 8px; margin: 0.8rem 0; position: relative;
+    }
+    .greet { display: none; padding: 1.5rem; margin: 1rem 0; border-radius: 15px; text-align: center; background: linear-gradient(135deg, rgba(255, 175, 204, 0.2), rgba(255, 235, 239, 0.5)); box-shadow: inset 0 0 10px rgba(255, 107, 139, 0.1); border: 2px dashed var(--primary); }
+
+    .premium-area { display: none; margin-top: 1.5rem; }
+    .hangman input { width: 40px; height: 40px; text-align: center; font-size: 1.2rem; margin: 0 5px; border: 2px solid var(--accent); border-radius: 8px; background: var(--light); }
+    .memory-card { width: 70px; height: 70px; font-size: 1.8rem; display: inline-flex; justify-content: center; align-items: center; margin: 8px; background: var(--light); border-radius: 12px; cursor: pointer; user-select: none; box-shadow: 0 4px 8px rgba(0,0,0,0.08); transition: all 0.3s ease; }
+    .memory-card:hover { transform: scale(1.05); }
+    .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+    .game-card { background: white; border-radius: 15px; padding: 1.5rem; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid rgba(255, 107, 139, 0.2); transition: all 0.3s ease; }
+    .game-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+    .game-card h3 { color: var(--primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+
+    .photo-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .photo-item { position: relative; border-radius: 12px; overflow: hidden; height: 150px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+    .photo-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+    .photo-item:hover img { transform: scale(1.05); }
+    .photo-item .remove { position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.55); color: #fff; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+    .photo-item .caption { position: absolute; left: 0; right: 0; bottom: 0; padding: 6px 10px; background: linear-gradient(transparent, rgba(0,0,0,0.6)); color: #fff; font-size: 0.85rem; }
+
+    .progress-bar { height: 8px; background: var(--light); border-radius: 4px; margin: 1rem 0; overflow: hidden; }
+    .progress { height: 100%; background: linear-gradient(90deg, var(--primary), var(--secondary)); border-radius: 4px; transition: width 0.5s ease; }
+
+    .couple-container { display: flex; justify-content: center; gap: 2rem; margin: 1.5rem 0; }
+    .couple { width: 100px; height: 100px; border-radius: 50%; overflow: hidden; border: 3px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; font-size: 2.5rem; position: relative; }
+    .heart { color: var(--primary); font-size: 2rem; animation: pulse 1.5s infinite; }
+
+    .couple.couple-photo { background-size: cover; background-position: center; }
+    .couple.couple-photo i { display: none; }
+
+    .feedback { position: fixed; top: 20px; right: 20px; padding: 15px 25px; border-radius: 10px; background: white; box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 100; display: flex; align-items: center; gap: 10px; transform: translateX(150%); transition: transform 0.3s ease; }
+    .feedback.show { transform: translateX(0); }
+    .feedback.success { border-left: 5px solid #4CAF50; }
+    .feedback.error { border-left: 5px solid #f44336; }
+    .feedback i { font-size: 1.5rem; }
+    .feedback.success i { color: #4CAF50; }
+    .feedback.error i { color: #f44336; }
+
+    .music-list { margin-top: 1rem; }
+    .music-item { background: var(--light); padding: 0.8rem; border-radius: 8px; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.8rem; }
+    .music-item:hover { background: var(--accent); transform: translateX(5px); }
+    .music-item i { color: var(--primary); font-size: 1.2rem; }
+    .music-item .title { font-weight: 600; color: var(--dark); flex: 1; }
+    .music-item .badge { font-size: 0.75rem; color: #666; }
+
+    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+
+    @media (max-width: 600px) {
+      .container { padding: 1rem; }
+      .games-grid { grid-template-columns: 1fr; }
+      .couple-container { gap: 1rem; }
+      .couple { width: 80px; height: 80px; font-size: 2rem; }
+    }
+  </style>
+
+  <script>
+    function showFeedback(message, isSuccess) {
+      var feedback = document.getElementById('feedback');
+      var feedbackMessage = document.getElementById('feedbackMessage');
+      if (!feedback || !feedbackMessage) return;
+      feedbackMessage.textContent = message;
+      feedback.className = isSuccess ? 'feedback success show' : 'feedback error show';
+      setTimeout(function(){ feedback.className = feedback.className.replace(' show', ''); }, 3000);
+    }
+    function random(arr){ return arr[Math.floor(Math.random() * arr.length)]; }
+
+    var missoes = [
+      'Surpreenda seu parceiro(a) com um café da manhã na cama',
+      'Escreva uma carta de amor e deixe em um lugar surpresa',
+      'Planejem uma noite de filmes românticos com pipoca caseira',
+      'Façam uma caminhada juntos e conversem sobre seus sonhos',
+      'Preparem juntos o jantar favorito do outro',
+      'Dancem juntos na sala de casa com sua música preferida',
+      'Relembrem momentos especiais do relacionamento',
+      'Façam uma sessão de massagem um no outro',
+      'Planejem uma viagem de sonho para o futuro',
+      'Cada um fala três coisas que ama no outro'
+    ];
+    var jogos = [
+      'Charadas íntimas: descreva momentos marcantes do relacionamento',
+      'Verdade ou Desafio suave com perguntas românticas',
+      'Mímica romântica: imite momentos especiais do casal',
+      'Quiz do relacionamento: teste seu conhecimento sobre o outro',
+      'Jogo dos olhos: olhe nos olhos do parceiro por 1 minuto sem rir'
+    ];
+    var desejos = [
+      'Banho de espuma a dois com velas e música suave',
+      'Sessão de massagem aromática com óleos essenciais',
+      'Ler um poema à luz de velas para seu amor',
+      'Jantar romântico com direito a taça de vinho',
+      'Piquenique no parque ao pôr do sol',
+      'Sessão de fotos românticas para guardar de recordação'
+    ];
+    var tarefas90 = [
+      'Dia 1: Cozinhem juntos uma receita doce',
+      'Dia 2: Assistam ao pôr do sol abraçados',
+      'Dia 3: Escrevam uma carta de amor um para o outro',
+      'Dia 4: Dancem juntos na sala de estar',
+      'Dia 5: Relembrem o primeiro encontro',
+      'Dia 6: Façam um piquenique em casa',
+      'Dia 7: Vejam fotos antigas do casal',
+      'Dia 8: Cada um diz três coisas que ama no outro',
+      'Dia 9: Tomem um banho de banheira com velas',
+      'Dia 10: Massagem um no outro'
+    ];
+    var versiculos = [
+      '“O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha.” - 1 Coríntios 13:4',
+      '“Acima de tudo, amem-se sinceramente uns aos outros, porque o amor perdoa muitíssimos pecados.” - 1 Pedro 4:8',
+      '“Maridos, ame cada um a sua mulher, assim como Cristo amou a igreja e entregou-se por ela” - Efésios 5:25',
+      '“Ninguém tem maior amor do que aquele que dá a sua vida pelos seus amigos.” - João 15:13',
+      '“O amor não maltrata, não busca seus interesses, não se ira facilmente, não guarda rancor.” - 1 Coríntios 13:5'
+    ];
+
+    var playlist = [];
+    function fileTitleFromPath(p){
+      try{
+        var name = (p.name || p).split('/').pop().split('\\').pop();
+        return decodeURIComponent(name).replace(/\.[a-z0-9]+$/i,'').replace(/[_-]+/g,' ').trim();
+      }catch(e){ return String(p); }
+    }
+    function addToPlaylist(entries){
+      var seen = {};
+      playlist.forEach(function(x){ seen[x.src]=1; });
+      entries.forEach(function(e){
+        if(e && e.src && !seen[e.src]){ playlist.push(e); seen[e.src]=1; }
+      });
+      renderPlaylist();
+    }
+    function renderPlaylist(){
+      var listEl = document.getElementById('musicList'); if(!listEl) return;
+      var searchEl = document.getElementById('musicSearch');
+      var q = (searchEl && searchEl.value ? searchEl.value : '').toLowerCase();
+      var items = playlist.slice().sort(function(a,b){ return a.title.localeCompare(b.title,'pt-BR'); })
+        .filter(function(it){ return !q || it.title.toLowerCase().includes(q); });
+      listEl.innerHTML = items.map(function(it){
+        return '<div class="music-item" data-src="'+it.src+'" data-title="'+it.title.replace(/"/g,'&quot;')+'"><i class="fas fa-music"></i><div class="title">'+it.title+'</div><span class="badge">'+(it.source==='server'?'servidor':'local')+'</span></div>';
+      }).join('');
+      Array.prototype.forEach.call(listEl.querySelectorAll('.music-item'), function(el){
+        el.addEventListener('click', function(){ playSrc(el.getAttribute('data-src'), el.getAttribute('data-title')); });
+      });
+    }
+    function playSrc(src, title){ var audio = document.getElementById('audioLocal'); if(!audio) return; audio.src = src; audio.play().then(function(){ showFeedback('Tocando: '+title, true); }).catch(function(e){}); }
+    async function loadServerMusic(){
+      var notice = document.getElementById('serverNotice'); if(notice) notice.style.display='none';
+      try{
+        var res = await fetch('/music/index.json', {cache:'no-store'});
+        if(!res.ok) throw new Error('index ausente');
+        var data = await res.json();
+        var arr = Array.isArray(data) ? data : [];
+        var entries = arr.map(function(it){
+          if(typeof it === 'string'){ return { title: fileTitleFromPath(it), src: it.indexOf('/music')===0? it : '/music/'+it, source:'server' }; }
+          if(it && typeof it.file === 'string'){ var p = it.file.indexOf('/music')===0? it.file : '/music/'+it.file; return { title: it.title || fileTitleFromPath(p), src: p, source:'server' }; }
+          return null;
+        }).filter(function(x){ return !!x; });
+        if(entries.length){ addToPlaylist(entries); if(notice){ notice.textContent = 'Encontramos '+entries.length+' música(s) em /music.'; notice.style.display='block'; } }
+        else { throw new Error('vazio'); }
+      }catch(e){ if(notice){ notice.textContent = 'Nenhuma lista do servidor encontrada. No Netlify, envie MP3 para /music e crie um index.json com a lista.'; notice.style.display='block'; } }
+    }
+    function wireMusicInputs(){
+      var up = document.getElementById('musicInput'); var dir = document.getElementById('dirInput'); var search = document.getElementById('musicSearch');
+      if(up){ up.addEventListener('change', function(e){ var files = Array.prototype.slice.call(e.target.files||[]); var entries = files.map(function(f){ return { title: fileTitleFromPath(f.name), src: URL.createObjectURL(f), source:'local' }; }); addToPlaylist(entries); showFeedback(files.length+' arquivo(s) adicionados.', true); }); }
+      if(dir){ dir.addEventListener('change', function(e){ var files = Array.prototype.slice.call(e.target.files||[]); var audio = files.filter(function(f){ return (f.type||'').indexOf('audio/')===0; }); var entries = audio.map(function(f){ return { title: fileTitleFromPath(f.name), src: URL.createObjectURL(f), source:'local' }; }); addToPlaylist(entries); showFeedback(audio.length+' arquivo(s) da pasta adicionados.', true); }); }
+      if(search){ search.addEventListener('input', renderPlaylist); }
+    }
+
+    function reloadDailyGame(){ document.getElementById('jogo').innerText = random(jogos); showFeedback('Novo jogo do dia carregado! 🎮', true); }
+    function fillDynamics(){
+      var d = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+      document.getElementById('missao').innerText = random(missoes);
+      document.getElementById('jogo').innerText = random(jogos);
+      document.getElementById('desejo').innerText = random(desejos);
+      document.getElementById('tarefa').innerText = tarefas90[d % tarefas90.length];
+      document.getElementById('versiculo').innerText = random(versiculos);
+      document.getElementById('missionProgress').style.width = ((d % missoes.length) * 10) + '%';
+      document.getElementById('taskProgress').style.width = ((d % tarefas90.length) * 1.5) + '%';
+      document.getElementById('bibleProgress').style.width = ((d % 365) * 0.3) + '%';
+    }
+
+    var hangmanState; var currentLyricAnswer = 'amor'; var currentLyricText = '';
+    var hangmanWords = ['paixao', 'carinho', 'beijo', 'casamento', 'amor', 'abraco', 'felicidade', 'parceiro', 'casal', 'romance'];
+    var truthOrDareList = [
+      'Verdade: Conte sobre seu primeiro amor',
+      'Desafio: Dê um beijo na testa do seu parceiro',
+      'Verdade: Qual seu momento mais romântico juntos?',
+      'Desafio: Abraço de 10 segundos',
+      'Verdade: O que mais te atrai no seu parceiro?',
+      'Desafio: Faça uma declaração de amor improvisada',
+      'Verdade: Qual foi a primeira coisa que pensou quando viu seu parceiro?',
+      'Desafio: Massagem nos pés por 2 minutos'
+    ];
+    var lyricChallenges = [
+      { lyric: 'É preciso ____ pra viver, pra sonhar, pra ser feliz!', answer: 'amor' },
+      { lyric: '____, ____, é coisa que se alimenta de repente', answer: 'amor' },
+      { lyric: 'O ____ é lindo, é tudo, é divino', answer: 'amor' },
+      { lyric: '____, meu grande ____, eu quero apenas te dizer', answer: 'amor' }
+    ];
+    var quizQuestions = [
+      { question: 'Qual a cor favorita do seu parceiro?', options: ['Azul', 'Verde', 'Vermelho', 'Amarelo'], answer: 0 },
+      { question: 'Onde foi o primeiro beijo?', options: ['Em casa', 'No cinema', 'No parque', 'Na praia'], answer: 2 },
+      { question: 'Qual é o apelido carinhoso preferido?', options: ['Amor', 'Querido(a)', 'Meu bem', 'Fofinho(a)'], answer: 1 },
+      { question: 'Qual foi o primeiro presente que trocaram?', options: ['Livro', 'Flores', 'Joia', 'Pelúcia'], answer: 3 }
+    ];
+    var affectionWheel = [
+      'Beijo de 10 segundos', 'Abraço de urso', 'Dizer 3 qualidades do outro', 'Enviar um áudio fofo', 'Caminhar de mãos dadas',
+      'Olhar nos olhos 1 minuto', 'Dançar uma música', 'Cuidar do outro por 5 min'
+    ];
+    var bingoPool = [
+      'Eu te amo', 'Beijo na bochecha', 'Carinho no cabelo', 'Cafuné', 'Memória feliz', 'Foto juntos', 'Música favorita', 'Primeiro encontro', 'Filme favorito', 'Sobremesa', 'Viagem dos sonhos', 'Meta do casal', 'Frase romântica', 'Mimo surpresa', 'Piquenique', 'Caminhada', 'Café na cama', 'Massagem', 'Apelido fofo', 'Rir juntos', 'Rezar juntos', 'Lista de gratidão', 'Declaração', 'Carta de amor', 'Planejar viagem'
+    ];
+    var dateDiceMap = [
+      'Cozinhar juntos', 'Maratonar um filme', 'Piquenique no parque', 'Jogar videogame cooperativo', 'Noite de jogos de tabuleiro', 'Caminhar sob as estrelas'
+    ];
+    var kissTouchActions = [
+      'Beijo na bochecha', 'Beijo na testa', 'Beijo no pescoço', 'Beijo na orelha', 'Beijo no ombro',
+      'Beijo na mão', 'Beijo no dorso da mão', 'Beijo no queixo', 'Beijo no nariz (eskimo)', 'Beijo na clavícula',
+      'Beijo na nuca', 'Beijo no canto da boca', 'Beijo demorado nos lábios', 'Beijinho no ombro', 'Beijo na palma da mão',
+      'Cafuné gostoso', 'Abraço bem apertado', 'Massagem nos ombros', 'Massagem nas costas', 'Acariciar o rosto',
+      'Entrelaçar os dedos', 'Segurar pela cintura', 'Mão na lombar', 'Carinho no cabelo', 'Passar a mão nas costas',
+      'Toque de mãos no rosto', 'Mãos dadas por 2 minutos', 'Olhar nos olhos 1 minuto'
+    ];
+    var deepQuestions = [
+      'Qual hábito meu te faz sentir mais amado(a)?',
+      'Qual sonho você quer que eu te ajude a realizar?',
+      'Que momento nosso você reviveria hoje?',
+      'Como posso ser um parceiro(a) melhor para você?',
+      'O que você mais admira no nosso relacionamento?'
+    ];
+    var datePlans = [
+      'Pôr do sol com chocolate quente', 'Passeio de bicicleta com fotos', 'Noite temática italiana', 'Fondue com música ao vivo', 'Caça ao tesouro romântica em casa', 'Desenhar um ao outro por 10 min'
+    ];
+    var sensesPrompts = [
+      'Vendado: adivinhe o cheiro', 'Vendado: adivinhe o sabor', 'Tato: identifique o objeto', 'Audição: adivinhe a música', 'Visão: encontre 5 coisas da cor escolhida'
+    ];
+    var charadesWords = ['A primeira dança', 'Pedido de namoro', 'Viagem inesquecível', 'Beijo na chuva', 'Jantar à luz de velas', 'Sessão de fotos'];
+    var tabooWords = ['amor', 'beijo', 'abraço', 'saudade', 'casamento', 'carinho'];
+    var storyPrompts = ['Como nos conhecemos (versão comédia)', 'Nosso futuro em 5 anos', 'O encontro perfeito', 'A viagem dos sonhos', 'A maior surpresa que já fizemos'];
+
+    function startHangman(){ var word = random(hangmanWords); hangmanState = { word: word, display: Array(word.length).fill('_'), wrong: [], maxWrong: 6 }; renderHangman(); var i = document.getElementById('hangmanInput'); i.value = ''; i.focus(); showFeedback('Novo jogo da forca iniciado! 💘', true); }
+    function renderHangman(){ if(!hangmanState) return; document.getElementById('hangmanDisplay').textContent = hangmanState.display.join(' '); document.getElementById('wrongLetters').textContent = hangmanState.wrong.join(', '); }
+    function guessHangman(){ var input = document.getElementById('hangmanInput'); var letter = (input.value || '').toLowerCase(); if(!letter || !hangmanState) return; if(hangmanState.word.indexOf(letter) !== -1){ for(var i=0;i<hangmanState.word.length;i++){ if(hangmanState.word[i]===letter){ hangmanState.display[i]=letter; } } if(hangmanState.display.indexOf('_')===-1){ document.getElementById('hangmanDisplay').innerHTML = '<span style="color:green">'+hangmanState.word+'</span> - Parabéns! 🎉'; showFeedback('Você ganhou o jogo da forca! 🏆', true); return; } } else { if(hangmanState.wrong.indexOf(letter)===-1) hangmanState.wrong.push(letter); if(hangmanState.wrong.length >= hangmanState.maxWrong){ document.getElementById('hangmanDisplay').innerHTML = '<span style="color:red">'+hangmanState.word+'</span> - Tente novamente! 😢'; showFeedback('Tente novamente com outra palavra! 💪', false); return; } } renderHangman(); input.value = ''; input.focus(); }
+    function startMemory(){ var symbols = ['❤','💋','😊','💌','💑','💏']; var deck = symbols.concat(symbols); for(var i=deck.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var tmp=deck[i]; deck[i]=deck[j]; deck[j]=tmp; } var container = document.getElementById('memoryGame'); container.innerHTML=''; var flipped=[]; var lock=false; var pairs=0; deck.forEach(function(symbol, idx){ var card=document.createElement('div'); card.className='memory-card'; card.setAttribute('data-symbol',symbol); card.setAttribute('data-index',idx); card.textContent='?'; card.addEventListener('click',function(){ if(lock || flipped.indexOf(card)!==-1 || card.textContent!=='?' || flipped.length===2) return; card.textContent=symbol; flipped.push(card); if(flipped.length===2){ lock=true; if(flipped[0].getAttribute('data-symbol')===flipped[1].getAttribute('data-symbol')){ setTimeout(function(){ flipped[0].style.visibility='hidden'; flipped[1].style.visibility='hidden'; flipped=[]; lock=false; pairs++; if(pairs===symbols.length){ setTimeout(function(){ container.innerHTML = '<div style="text-align:center;font-size:1.5rem;color:var(--primary);">Parabéns! 🎉</div>'; showFeedback('Você completou o jogo da memória! 🏆', true); }, 400); } }, 300); } else { setTimeout(function(){ flipped.forEach(function(c){c.textContent='?';}); flipped=[]; lock=false; }, 700); } } }); container.appendChild(card); }); showFeedback('Jogo da memória iniciado! 🧠', true); }
+    function truthOrDare(){ document.getElementById('todResult').textContent = random(truthOrDareList); showFeedback('Novo desafio carregado! 💑', true); }
+    function startLyricGame(){ var challenge = random(lyricChallenges); document.getElementById('fillLyric').textContent = challenge.lyric; currentLyricText = challenge.lyric; currentLyricAnswer = challenge.answer; document.getElementById('fillInput').value = ''; showFeedback('Nova música para completar! 🎵', true); }
+    function checkLyric(){ var input = document.getElementById('fillInput'); var answer = (input.value||'').toLowerCase().trim(); if(!answer) return; if(answer===currentLyricAnswer){ var completed = currentLyricText.replace(/____/g, '<span style="color:green">'+currentLyricAnswer+'</span>'); document.getElementById('fillLyric').innerHTML = completed+' - <span style="color:green">Correto! ❤️</span>'; showFeedback('Resposta correta! 🎉', true); } else { document.getElementById('fillLyric').innerHTML = '<span style="color:red">Resposta incorreta! Tente novamente.</span>'; showFeedback('Tente outra resposta! 💪', false); } input.value=''; }
+    var quizIndex=0, quizScore=0; function startQuiz(){ quizIndex=0; quizScore=0; renderQuiz(); }
+    function renderQuiz(){ var q = quizQuestions[quizIndex]; if(!q){ document.getElementById('quizBox').innerHTML = '<div style="text-align:center">Placar: <strong>'+quizScore+'</strong>/'+quizQuestions.length+'</div>'; return; } var box = document.getElementById('quizBox'); box.innerHTML = '<div style="font-weight:700; margin-bottom:.6rem; color:var(--primary);">'+q.question+'</div>' + q.options.map(function(op, i){ return '<button class="button small" onclick="answerQuiz('+i+')" style="margin:.2rem .2rem 0 0;">'+op+'</button>'; }).join(''); }
+    function answerQuiz(i){ var q = quizQuestions[quizIndex]; if(i===q.answer) quizScore++; quizIndex++; renderQuiz(); }
+    function spinAffectionWheel(){ var pick = random(affectionWheel); document.getElementById('roletaResult').textContent = pick; showFeedback('Roleta do afeto girada! 💞', true); }
+    function startBingo(){ var grid = document.getElementById('bingoGrid'); grid.innerHTML=''; var pool=bingoPool.slice(); while(pool.length>25) pool.splice(Math.floor(Math.random()*pool.length),1); pool.forEach(function(text){ var cell=document.createElement('div'); cell.textContent=text; cell.style.padding='8px'; cell.style.border='1px solid rgba(0,0,0,.1)'; cell.style.borderRadius='8px'; cell.style.background='var(--light)'; cell.style.cursor='pointer'; cell.onclick=function(){ cell.style.background = (cell.style.background==='rgb(255, 245, 247)') ? 'var(--accent)' : 'var(--light)'; }; grid.appendChild(cell); }); }
+    function rollDateDice(){ var n = Math.floor(Math.random()*6); document.getElementById('dateDiceResult').textContent = (n+1)+' ➜ '+dateDiceMap[n]; }
+    function flipCoinKiss(){ var isHeads = Math.random()<0.5; var action = random(kissTouchActions); document.getElementById('coinKiss').textContent = (isHeads ? 'Cara' : 'Coroa') + ': ' + action; }
+    function deepQuestion(){ document.getElementById('deepQ').textContent = random(deepQuestions); }
+    function randomDatePlan(){ document.getElementById('datePlan').textContent = random(datePlans); }
+    function sensesChallenge(){ document.getElementById('senses').textContent = random(sensesPrompts); }
+    function twoTruthsOneLie(){ var ideas=['Infância', 'Trabalho', 'Viagens', 'Hobbies', 'Culinária']; document.getElementById('ttol').textContent = 'Tema sugerido: '+random(ideas)+' — escrevam 2 verdades e 1 mentira!'; }
+    function tabooGame(){ var word = random(tabooWords); document.getElementById('tabooWord').textContent = 'Por 1 minuto, conversem sem usar a palavra: "'+word+'"'; startTimer(60, 'tabooTimerSpan'); }
+    function charadesStart(){ document.getElementById('charades').textContent = 'Imite: '+random(charadesWords); startTimer(60, 'charadesTimer'); }
+    function storyPrompt(){ document.getElementById('storyPrompt').textContent = random(storyPrompts); }
+    function startTimer(seconds, spanId){ var sec = seconds; var id = spanId; function tick(){ var m = String(Math.floor(sec/60)); if(m.length<2) m='0'+m; var s = String(sec%60); if(s.length<2) s='0'+s; var el = document.getElementById(id); if(el) el.textContent = m+':'+s; if(sec>0){ sec--; setTimeout(tick, 1000); } } if(!document.getElementById(id)){ var sp = document.createElement('span'); sp.id=id; sp.style.marginLeft='.5rem'; sp.style.fontWeight='700'; sp.textContent=''; document.body.appendChild(sp); } tick(); }
+
+    var LS_COUPLE_PHOTO = 'reacende_couple_photo_v1';
+    function applyCouplePhoto(url){
+      try{
+        var nodes = document.querySelectorAll('.couple');
+        for(var i=0;i<nodes.length;i++){ nodes[i].style.backgroundImage = "url('"+url+"')"; nodes[i].classList.add('couple-photo'); }
+        localStorage.setItem(LS_COUPLE_PHOTO, url);
+        showFeedback('Foto do casal definida! 💑', true);
+      }catch(e){}
+    }
+    function loadCouplePhoto(){
+      try{
+        var url = localStorage.getItem(LS_COUPLE_PHOTO);
+        if(url){
+          var nodes = document.querySelectorAll('.couple');
+          for(var i=0;i<nodes.length;i++){ nodes[i].style.backgroundImage = "url('"+url+"')"; nodes[i].classList.add('couple-photo'); }
+        }
+      }catch(e){}
+    }
+    function clearCouplePhoto(){
+      try{
+        localStorage.removeItem(LS_COUPLE_PHOTO);
+        var nodes = document.querySelectorAll('.couple');
+        for(var i=0;i<nodes.length;i++){ nodes[i].style.backgroundImage=''; nodes[i].classList.remove('couple-photo'); }
+        showFeedback('Foto do casal removida.', true);
+      }catch(e){}
+    }
+    function sanitizeHttpUrl(u){
+      try{
+        var url = new URL(u);
+        if(url.protocol === 'http:' || url.protocol === 'https:'){ return url.href; }
+        return null;
+      }catch(e){ return null; }
+    }
+    function setCouplePhotoFromUrl(){
+      var input = document.getElementById('couplePhotoUrl');
+      var val = (input && input.value ? input.value : '').trim();
+      var safe = sanitizeHttpUrl(val);
+      if(!safe){ showFeedback('Link inválido. Use um endereço https:// da imagem.', false); return; }
+      var img = new Image();
+      img.onload = function(){ applyCouplePhoto(safe); if(input) input.value = ''; };
+      img.onerror = function(){ showFeedback('Não consegui carregar essa imagem. Tente outro link.', false); };
+      img.crossOrigin = 'anonymous';
+      img.src = safe;
+    }
+    function wireCouplePhoto(){
+      var inp = document.getElementById('couplePhotoInput');
+      var clr = document.getElementById('clearCouplePhotoBtn');
+      var urlBtn = document.getElementById('useCouplePhotoUrlBtn');
+      var urlInput = document.getElementById('couplePhotoUrl');
+      var cc = document.querySelector('.couple-container');
+
+      if(inp){ inp.addEventListener('change', function(e){ var files=e.target.files; var f = files && files[0]; if(f && (f.type||'').indexOf('image/')===0){ var r=new FileReader(); r.onload=function(ev){ applyCouplePhoto(ev.target.result); }; r.readAsDataURL(f); } }); }
+      if(clr){ clr.addEventListener('click', clearCouplePhoto); }
+      if(urlBtn){ urlBtn.addEventListener('click', setCouplePhotoFromUrl); }
+      if(urlInput){ urlInput.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); setCouplePhotoFromUrl(); } }); }
+      if(cc){ cc.addEventListener('dragover', function(e){ e.preventDefault(); });
+             cc.addEventListener('drop', function(e){ e.preventDefault(); var files=e.dataTransfer.files; var f=files && files[0]; if(f && (f.type||'').indexOf('image/')===0){ var r=new FileReader(); r.onload=function(ev){ applyCouplePhoto(ev.target.result); }; r.readAsDataURL(f); } }); }
+    }
+
+    var photos = []; var LS_KEY = 'reacende_photos_v1';
+    function saveGallery(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(photos)); }catch(e){ showFeedback('Armazenamento cheio. Use Exportar para backup.', false); } renderGallery(); }
+    function loadGallery(){ try{ var raw = localStorage.getItem(LS_KEY); photos = raw ? JSON.parse(raw) : []; }catch(e){ photos = []; } renderGallery(); }
+    function renderGallery(){ var gal = document.getElementById('photoGallery'); if(!gal) return; gal.innerHTML=''; photos.forEach(function(p, idx){ var item=document.createElement('div'); item.className='photo-item'; var img=document.createElement('img'); img.src=p.dataUrl; img.alt=p.caption||''; var rm=document.createElement('button'); rm.className='remove'; rm.innerHTML='<i class="fas fa-trash"></i>'; rm.title='Remover'; rm.onclick=function(){ photos.splice(idx,1); saveGallery(); };
+        var cap=document.createElement('div'); cap.className='caption'; cap.textContent=p.caption||'';
+        var set=document.createElement('button'); set.className='set-couple'; set.innerHTML='<i class="fas fa-heart"></i> Casal'; set.title='Definir como foto do casal'; set.onclick=function(){ applyCouplePhoto(p.dataUrl); };
+        item.appendChild(img); item.appendChild(rm); item.appendChild(cap); item.appendChild(set); gal.appendChild(item); }); }
+    function addSelectedPhotos(){ var input = document.getElementById('photoInput'); var files = Array.prototype.slice.call((input && input.files) || []); var caption = (document.getElementById('photoCaption') && document.getElementById('photoCaption').value ? document.getElementById('photoCaption').value.trim() : ''); if(!files.length){ showFeedback('Selecione ao menos uma imagem.', false); return; } files.forEach(function(f){ var reader = new FileReader(); reader.onload = function(e){ photos.unshift({ id: Date.now()+Math.random(), dataUrl: e.target.result, caption: caption }); saveGallery(); }; reader.readAsDataURL(f); }); var pc=document.getElementById('photoCaption'); if(pc) pc.value=''; if(input) input.value=''; showFeedback('Foto(s) adicionada(s)! 📸', true); }
+    function exportGallery(){ var blob = new Blob([JSON.stringify(photos)], {type:'application/json'}); var url = URL.createObjectURL(blob); var a = document.createElement('a'); a.href=url; a.download='galeria-reacende.json'; a.click(); URL.revokeObjectURL(url); showFeedback('Backup exportado! 💾', true); }
+
+    function unlockPremium(){ var password = document.getElementById('pw').value; if(password==='REACENDE123'){ document.getElementById('premiumArea').style.display='block'; startHangman(); startMemory(); startLyricGame(); startBingo(); document.getElementById('pw').value=''; document.getElementById('premiumArea').scrollIntoView({behavior:'smooth'}); showFeedback('Área premium desbloqueada! 🎉', true); } else { showFeedback('Senha incorreta! Tente novamente.', false); } }
+
+    function initApp(gender){
+      window.currentUser = gender;
+      var greetHomem = document.getElementById('greetHomem');
+      var greetMulher = document.getElementById('greetMulher');
+      if(greetHomem && greetMulher){
+        greetHomem.style.display = (gender === 'Homem') ? 'block' : 'none';
+        greetMulher.style.display = (gender === 'Mulher') ? 'block' : 'none';
+        var target = (gender === 'Homem') ? greetHomem : greetMulher;
+        if (target && target.scrollIntoView) target.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+      fillDynamics();
+      try { loadServerMusic(); } catch(e){}
+      var ps = document.getElementById('playerStatus'); if(ps) ps.innerHTML = '<i class="fas fa-music"></i> Abra a seção "Escolha uma música romântica" para selecionar e tocar.';
+      showFeedback('Bem-vindo(a), '+(gender === 'Homem' ? 'cara' : 'querida')+'! ❤️', true);
+    }
+
+    document.addEventListener('DOMContentLoaded', function(){
+      try { fillDynamics(); } catch(e){}
+      try { loadGallery(); } catch(e){}
+      try { wireMusicInputs(); } catch(e){}
+      try { loadCouplePhoto(); } catch(e){}
+      try { wireCouplePhoto(); } catch(e){}
+    });
+
+    window.initApp = initApp;
+    window.reloadDailyGame = reloadDailyGame;
+    window.startHangman = startHangman;
+    window.guessHangman = guessHangman;
+    window.startMemory = startMemory;
+    window.truthOrDare = truthOrDare;
+    window.startLyricGame = startLyricGame;
+    window.checkLyric = checkLyric;
+    window.startQuiz = startQuiz;
+    window.answerQuiz = answerQuiz;
+    window.spinAffectionWheel = spinAffectionWheel;
+    window.startBingo = startBingo;
+    window.rollDateDice = rollDateDice;
+    window.flipCoinKiss = flipCoinKiss;
+    window.deepQuestion = deepQuestion;
+    window.randomDatePlan = randomDatePlan;
+    window.sensesChallenge = sensesChallenge;
+    window.twoTruthsOneLie = twoTruthsOneLie;
+    window.tabooGame = tabooGame;
+    window.charadesStart = charadesStart;
+    window.storyPrompt = storyPrompt;
+    window.startTimer = startTimer;
+    window.addSelectedPhotos = addSelectedPhotos;
+    window.exportGallery = exportGallery;
+    window.unlockPremium = unlockPremium;
+  </script>
+</head>
+<body>
+  <div class="feedback" id="feedback">
+    <i class="fas fa-check-circle"></i>
+    <span id="feedbackMessage"></span>
+  </div>
+
+  <header>
+    <h1><i class="fas fa-heart"></i> Reacende</h1>
+    <p>Tempo de Qualidade para Casais</p>
+  </header>
+
+  <div class="container">
+    <div class="couple-container">
+      <div class="couple"><i class="fas fa-male"></i></div>
+      <div class="heart"><i class="fas fa-heart"></i></div>
+      <div class="couple"><i class="fas fa-female"></i></div>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-user"></i> Quem é você?</h2>
+      <button id="btnHomem" class="button" onclick="initApp('Homem')"><i class="fas fa-male"></i> Sou Homem</button>
+      <button id="btnMulher" class="button" onclick="initApp('Mulher')"><i class="fas fa-female"></i> Sou Mulher</button>
+      <div id="playerStatus" style="margin-top: 1rem; font-size: 0.9rem; color: #666">Aguardando seleção...</div>
+      <div style="margin-top:.8rem; display:flex; gap:.5rem; flex-wrap:wrap; align-items:center;">
+        <label class="button small" for="couplePhotoInput" style="cursor:pointer"><i class="fas fa-image"></i> Foto do casal</label>
+        <input type="file" id="couplePhotoInput" accept="image/*" style="display:none" />
+        <input type="url" id="couplePhotoUrl" placeholder="Cole o link da imagem (https://...)" style="flex:1; min-width:240px; padding:.6rem; border-radius:50px; border:2px solid var(--accent);" />
+        <button class="button small" id="useCouplePhotoUrlBtn"><i class="fas fa-link"></i> Usar link</button>
+        <button class="button outline small" id="clearCouplePhotoBtn"><i class="fas fa-eraser"></i> Remover foto</button>
+        <span style="font-size:.85rem; color:#666">Dica: arraste uma imagem para os círculos acima</span>
+      </div>
+    </div>
+
+    <div id="greetHomem" class="greet">
+      <h2><i class="fas fa-heart"></i> Bem-vindo, cara! ❤️</h2>
+      <p>Atividades especiais para surpreender sua parceira hoje.</p>
+    </div>
+    <div id="greetMulher" class="greet">
+      <h2><i class="fas fa-heart"></i> Bem-vinda, querida! 💖</h2>
+      <p>Atividades especiais para surpreender seu parceiro hoje.</p>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-tasks"></i> Missão do Dia</h2>
+      <div id="missao" class="mission"></div>
+      <div class="progress-bar"><div id="missionProgress" class="progress" style="width: 20%"></div></div>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-gamepad"></i> Jogo do Dia</h2>
+      <div id="jogo" class="game"></div>
+      <button class="button outline small" onclick="reloadDailyGame()" style="margin-top: 1rem"><i class="fas fa-redo"></i> Novo Jogo</button>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-star"></i> Desejo do Dia</h2>
+      <div id="desejo" class="wish"></div>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-home"></i> Atividade de Casa (90 dias)</h2>
+      <div id="tarefa" class="atividade"></div>
+      <div class="progress-bar"><div id="taskProgress" class="progress" style="width: 35%"></div></div>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-book"></i> Versículo Bíblico (365 dias)</h2>
+      <div id="versiculo" class="biblia"></div>
+      <div class="progress-bar"><div id="bibleProgress" class="progress" style="width: 15%"></div></div>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-headphones"></i> Escolha uma música romântica</h2>
+      <p>Carregue músicas do seu computador <strong>ou</strong> envie arquivos MP3 para a pasta <code>/music</code> do seu site no Netlify (com um <code>index.json</code> listando os arquivos). As músicas serão exibidas <strong>em ordem alfabética</strong>.</p>
+      <div style="display:flex; gap:.5rem; flex-wrap:wrap; align-items:center; margin:.8rem 0;">
+        <input type="file" id="musicInput" accept="audio/*" multiple />
+        <label class="button small" for="dirInput" style="cursor:pointer"><i class="fas fa-folder-open"></i> Selecionar pasta</label>
+        <input type="file" id="dirInput" webkitdirectory multiple accept="audio/*" style="display:none" />
+        <input type="text" id="musicSearch" placeholder="Filtrar por nome..." style="flex:1; padding:.6rem; border-radius:50px; border:2px solid var(--accent);" />
+      </div>
+      <div id="serverNotice" class="wish" style="display:none"></div>
+      <div id="musicList" class="music-list"></div>
+      <div style="margin-top:1rem;">
+        <audio id="audioLocal" controls style="width:100%; border-radius:12px; box-shadow:0 5px 15px rgba(0,0,0,0.1);"></audio>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-images"></i> Galeria de Momentos</h2>
+      <p>Guarde fotos especiais aqui. Você pode <strong>colar</strong> imagens (Ctrl/⌘+V), <strong>arrastar e soltar</strong>, ou usar o botão de upload. Tudo fica salvo neste dispositivo. Use <em>Exportar</em> para fazer backup e depois <em>Importar</em> em outro aparelho.</p>
+      <div style="display:flex; gap:.5rem; margin:.8rem 0; flex-wrap: wrap; align-items: center;">
+        <input type="file" id="photoInput" accept="image/*" multiple />
+        <input type="text" id="photoCaption" placeholder="Legenda (opcional)" style="flex:1; padding:.6rem; border-radius:50px; border:2px solid var(--accent);" />
+        <button class="button small" onclick="addSelectedPhotos()"><i class="fas fa-upload"></i> Adicionar</button>
+        <button class="button outline small" onclick="exportGallery()"><i class="fas fa-file-export"></i> Exportar</button>
+        <label class="button outline small" for="importInput" style="cursor:pointer"><i class="fas fa-file-import"></i> Importar</label>
+        <input type="file" id="importInput" accept="application/json" style="display:none" />
+      </div>
+      <div id="dropZone" style="border:2px dashed var(--primary); border-radius:12px; padding:1rem; text-align:center; background:rgba(255,235,239,.4);">Solte imagens aqui ou cole com Ctrl/⌘+V</div>
+      <div class="photo-gallery" id="photoGallery"></div>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-crown"></i> Área Premium</h2>
+      <div style="display: flex; gap: 0.5rem; margin-top: 1rem">
+        <input type="password" id="pw" placeholder="Senha Premium" style="flex: 1; padding: 0.8em; border-radius: 50px; border: 2px solid var(--accent)" />
+        <button class="button" onclick="unlockPremium()"><i class="fas fa-lock-open"></i> Entrar</button>
+      </div>
+
+      <div id="premiumArea" class="premium-area">
+        <h3><i class="fas fa-gamepad"></i> Jogos Premium para Casais (16 jogos)</h3>
+        <div class="games-grid">
+          <div class="game-card">
+            <h3><i class="fas fa-font"></i> Forca Romântica</h3>
+            <div id="hangmanDisplay" style="font-size: 1.8rem; letter-spacing: 5px; margin: 1rem 0"></div>
+            <div>Letras erradas: <span id="wrongLetters" style="color: var(--primary)"></span></div>
+            <div style="display: flex; margin: 1rem 0">
+              <input id="hangmanInput" maxlength="1" placeholder="A" />
+              <button class="button small" onclick="guessHangman()" style="margin-left: 0.5rem"><i class="fas fa-paper-plane"></i> Enviar</button>
+            </div>
+            <button class="button outline small" onclick="startHangman()"><i class="fas fa-redo"></i> Novo Jogo</button>
+          </div>
+
+          <div class="game-card">
+            <h3><i class="fas fa-brain"></i> Memória do Casal</h3>
+            <div id="memoryGame" style="margin: 1rem 0; min-height: 180px"></div>
+            <button class="button outline small" onclick="startMemory()"><i class="fas fa-redo"></i> Reiniciar</button>
+          </div>
+
+          <div class="game-card">
+            <h3><i class="fas fa-question-circle"></i> Verdade ou Desafio</h3>
+            <button class="button" onclick="truthOrDare()" style="margin: 1rem 0"><i class="fas fa-play"></i> Jogar</button>
+            <div id="todResult" style="background: var(--light); padding: 1rem; border-radius: 10px; min-height: 80px; display: flex; align-items: center; justify-content: center; text-align: center; font-weight: 600; color: var(--primary)"></div>
+            <button class="button outline small" onclick="truthOrDare()"><i class="fas fa-redo"></i> Próximo</button>
+          </div>
+
+          <div class="game-card">
+            <h3><i class="fas fa-music"></i> Complete a Letra</h3>
+            <div id="fillLyric" style="font-size: 1.2rem; margin: 1rem 0; min-height: 60px; display: flex; align-items: center; justify-content: center; text-align: center; font-weight: 600; color: var(--primary)"></div>
+            <div style="display: flex">
+              <input id="fillInput" placeholder="Sua resposta..." style="flex: 1; padding: 0.5em; border-radius: 50px; border: 2px solid var(--accent)" />
+              <button class="button small" onclick="checkLyric()" style="margin-left: 0.5rem"><i class="fas fa-check"></i></button>
+            </div>
+            <button class="button outline small" onclick="startLyricGame()"><i class="fas fa-redo"></i> Nova Música</button>
+          </div>
+
+          <div class="game-card">
+            <h3><i class="fas fa-list-check"></i> Quiz do Relacionamento</h3>
+            <div id="quizBox" style="min-height: 140px"></div>
+            <button class="button small" onclick="startQuiz()"><i class="fas fa-play"></i> Iniciar</button>
+          </div>
+
+          <div class="game-card">
+            <h3><i class="fas fa-compact-disc"></i> Roleta do Afeto</h3>
+            <div id="roletaResult" style="min-height: 70px; display:flex; align-items:center; justify-content:center; font-weight:700; color:var(--primary);"></div>
+            <button class="button small" onclick="spinAffectionWheel()"><i class="fas fa-shuffle"></i> Girar</button>
+          </div>
+
+          <div class="game-card">
+            <h3><i class="fas fa-table-cells"></i> Bingo do Amor</h3>
+            <div id="bingoGrid" style="display:grid; grid-template-columns: repeat(5, 1fr); gap:6px;"></div>
+            <button class="button small" onclick="startBingo()"><i class="fas fa-redo"></i> Novo Cartão</button>
+          </div>
+
+          <div class="game-card">
+            <h3><i class="fas fa-dice"></i> Dado do Date</h3>
+            <div id="dateDiceResult" style="min-height: 70px; display:flex; align-items:center; justify-content:center; font-weight:700; color:var(--primary);"></div>
+            <button class="button small" onclick="rollDateDice()"><i class="fas fa-dice"></i> Rolar</button>
+          </div>
+
+          <div class="game-card">
+            <h3><i class="fas fa-coins"></i> Cara ou Coroa dos Beijos</h3>
+            <div id="coinKiss" style="min-height: 70px; display:flex; align-items:center; justify-content:center; font-weight:700; color:var(--primary);"></div>
+            <button class="button small" onclick="flipCoinKiss()"><i class="fas fa-rotate"></i> Jogar</button>
+          </div>
+
+          <div class="game-card">
+            <h3><i class="fas fa-comments"></i> Perguntas Profundas</h3>
+            <div id="deepQ" style="min-height: 70px; display:flex; align-items:center; justify-content:center; text-align:center; font-weight:700; color:var(--primary);"></div>
+            <button class="button small" onclick="deepQuestion()"><i class="fas fa-circle-question"></i> Sortear</button>
+          </div>
+
+          <div class="game-card">
+            <h3><i class="fas fa-map-pin"></i> Encontro Surpresa</h3>
+            <div id="datePlan" style="min-height: 70px; display:flex; align-items:center; justify-content:center; text-align:center; font-weight:700; color:var(--primary);"></div>
+            <button class="button small" onclick="randomDatePlan()"><i class="fas fa-wand-magic-sparkles"></i> Gerar</button>
+          </div>
+
+          <div class="game-card">
+            <h3><i class="fas fa-eye-slash"></i> Desafio dos Sentidos</h3>
+            <div id="senses" style="min-height: 70px; display:flex; align-items:center; justify-content:center; text-align:center; font-weight:700; color:var(--primary);"></div>
+            <button class="button small" onclick="sensesChallenge()"><i class="fas fa-arrows-to-eye"></i> Sortear</button>
+          </div>
+
+          <div class="game-card">
+            <h3><i class="fas fa-user-secret"></i> 2 Verdades e 1 Mentira</h3>
+            <p style="font-size:.9rem; color:#555">Cada um escreve 3 frases. O outro tenta adivinhar a mentira.</p>
+            <button class="button small" onclick="twoTruthsOneLie()"><i class="fas fa-lightbulb"></i> Ideias</button>
+            <div id="ttol" style="margin-top:.8rem; font-weight:700; color:var(--primary);"></div>
+          </div>
+
+          <div class="game-card">
+            <h3><i class="fas fa-ban"></i> Palavra Proibida</h3>
+            <div id="tabooWord" style="min-height: 70px; display:flex; align-items:center; justify-content:center; font-weight:700; color:var(--primary);"></div>
+            <button class="button small" onclick="tabooGame()"><i class="fas fa-shuffle"></i> Sortear</button>
+          </div>
+
+          <div class="game-card">
+            <h3><i class="fas fa-person-walking"></i> Mímica Romântica</h3>
+            <div id="charades" style="min-height: 70px; display:flex; align-items:center; justify-content:center; text-align:center; font-weight:700; color:var(--primary);"></div>
+            <button class="button small" onclick="charadesStart()"><i class="fas fa-clapperboard"></i> Sortear + 60s</button>
+          </div>
+
+          <div class="game-card">
+            <h3><i class="fas fa-hourglass-half"></i> Histórias em 5 Minutos</h3>
+            <div id="storyPrompt" style="min-height: 70px; display:flex; align-items:center; justify-content:center; text-align:center; font-weight:700; color:var(--primary);"></div>
+            <div style="display:flex; gap:.5rem; align-items:center; margin-top:.5rem;">
+              <button class="button small" onclick="storyPrompt()"><i class="fas fa-wand-magic-sparkles"></i> Novo Tema</button>
+              <button class="button outline small" onclick="startTimer(300, 'timer5m')"><i class="fas fa-play"></i> Iniciar 5:00</button>
+              <span id="timer5m" style="font-weight:700; min-width:70px; text-align:center;">05:00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
